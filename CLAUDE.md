@@ -51,16 +51,18 @@ Examples:
    npm run lint     # Check for issues
    ```
 
-3. **After completion**: Commit with clear message
+3. **After completion**: Commit with clear message using [Conventional Commits](https://www.conventionalcommits.org/)
    ```bash
    git add .
    git commit -m "feat: add size presets for favicon resizing"
    ```
+   See [docs/VERSIONING.md](docs/VERSIONING.md) for commit message format and automatic versioning.
 
 4. **Never**:
    - Make changes directly on `main` branch
    - Commit without testing build/lint
    - Skip branch creation for code changes
+   - Use non-conventional commit messages (breaks automatic versioning)
 
 ## Architecture
 
@@ -157,6 +159,36 @@ Designed for Vercel deployment with Blob Storage integration. See [docs/DEPLOYME
 
 When working on this codebase, AI coding agents (Claude Code, Cursor, etc.) should follow these documentation practices:
 
+### When to Create History Documentation
+
+**IMPORTANT**: Only create history documentation files when starting a NEW feature branch.
+
+#### Branch-Based Documentation Tracking
+1. When creating a new feature branch, record the initial commit hash
+2. Create ONE history document per branch that tracks all changes made on that branch
+3. Update the same history file as work progresses on the branch
+4. Only create a NEW history file when creating a NEW branch
+
+**Example Workflow**:
+```bash
+# Create new branch
+git checkout -b feature/new-feature
+
+# Get the current commit hash (branch point)
+git rev-parse HEAD
+# Output: abc123def456...
+
+# Create history file referencing this branch point
+# docs/history/2025-12-12-new-feature.md
+# Include commit hash in file metadata
+```
+
+**Do NOT create a new history file**:
+- For every small change
+- For documentation updates
+- For minor refactoring within the same branch
+- When continuing work on an existing branch
+
 ### Summary Files Location
 All change summaries, improvement documents, and session notes should be stored in:
 ```
@@ -164,15 +196,15 @@ docs/history/YYYY-MM-DD-description.md
 ```
 
 ### Naming Convention
-- Use ISO date format: `YYYY-MM-DD`
-- Follow with a descriptive slug: `improvements`, `feature-name`, `bugfix-description`
+- Use ISO date format: `YYYY-MM-DD` (date the branch was created)
+- Follow with a descriptive slug matching the branch name
 - Examples:
-  - `docs/history/2025-12-12-improvements.md`
-  - `docs/history/2025-12-12-caching-feature.md`
-  - `docs/history/2025-12-12-typescript-cleanup.md`
+  - Branch: `feature/improvements-and-size-presets` → File: `docs/history/2025-12-12-improvements-and-size-presets.md`
+  - Branch: `feature/caching-feature` → File: `docs/history/2025-12-12-caching-feature.md`
+  - Branch: `fix/typescript-bug` → File: `docs/history/2025-12-12-typescript-bug.md`
 
 ### What to Document
-Create dated summary files for:
+Create dated summary files for NEW branches that involve:
 - Major feature additions
 - Significant refactoring or improvements
 - Bug fixes with complex changes
@@ -184,14 +216,28 @@ Create dated summary files for:
 Each summary file should include:
 1. **Title**: Brief description of changes
 2. **Date**: ISO format date
-3. **Summary**: Overview of what was done
-4. **Changes**: Detailed list of modifications
-5. **Files Modified**: List of affected files with links
-6. **Impact**: How this affects the codebase
-7. **Testing**: Build/test status
+3. **Branch**: Branch name this history tracks
+4. **Branch Point**: Commit hash where the branch was created (for reference)
+5. **Summary**: Overview of what was done
+6. **Changes**: Detailed list of modifications
+7. **Files Modified**: List of affected files with links
+8. **Impact**: How this affects the codebase
+9. **Testing**: Build/test status
 
 ### General Documentation
 Non-historical documentation goes in:
-- `docs/` - Permanent documentation (DEPLOYMENT.md, API.md, etc.)
+- `docs/` - Permanent documentation (DEPLOYMENT.md, VERSIONING.md, etc.)
 - `README.md` - Project overview and quick start
 - `CLAUDE.md` - This file (AI agent instructions)
+
+## Versioning
+
+This project uses **automated semantic versioning** via GitHub Actions. Version bumps happen automatically when commits are pushed to `main` based on [Conventional Commits](https://www.conventionalcommits.org/) format.
+
+**Quick Reference**:
+- `feat:` → Minor version bump (0.1.0 → 0.2.0)
+- `fix:` → Patch version bump (0.1.0 → 0.1.1)
+- `feat!:` or `BREAKING CHANGE:` → Major version bump (0.1.0 → 1.0.0)
+- Other commits (docs, chore, refactor) → No version bump
+
+See [docs/VERSIONING.md](docs/VERSIONING.md) for complete details on commit message format, versioning strategy, and workflow configuration.
