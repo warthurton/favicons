@@ -15,7 +15,7 @@ An open-source and free favicon provider with caching and resizing support.
 ### Get Original Favicon
 
 ```
-https://your-favicons-service/?domain=github.com
+https://your-favicons-service/github.com
 ```
 
 Returns a 302 redirect to GitHub's favicon (cached for fast subsequent requests).
@@ -23,18 +23,26 @@ Returns a 302 redirect to GitHub's favicon (cached for fast subsequent requests)
 ### Get Resized Favicon
 
 ```
-https://your-favicons-service/?domain=github.com&size=64
+https://your-favicons-service/github.com?size=medium
 ```
 
 Returns a 64x64 pixel version of the favicon (cached separately).
 
-### Common Sizes
+### Size Presets
 
-- Small icons: `?domain=example.com&size=16`
-- Standard icons: `?domain=example.com&size=32`
-- Large icons: `?domain=example.com&size=64`
-- Extra large: `?domain=example.com&size=128`
-- Maximum size: `?domain=example.com&size=512`
+Use convenient preset names instead of pixel values:
+
+- `/example.com?size=tiny` - 16x16 pixels
+- `/example.com?size=small` - 32x32 pixels
+- `/example.com?size=medium` - 64x64 pixels
+- `/example.com?size=large` - 128x128 pixels
+- `/example.com?size=xlarge` - 256x256 pixels
+- `/example.com?size=xxlarge` - 512x512 pixels
+
+Or use exact pixel values (1-512):
+
+- `/example.com?size=48` - 48x48 pixels
+- `/example.com?size=96` - 96x96 pixels
 
 ## Deployment
 
@@ -48,4 +56,4 @@ Deploy your own instance to Vercel with persistent caching:
 2. Add `BLOB_READ_WRITE_TOKEN` environment variable
 3. Deploy!
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed setup instructions.
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed setup instructions.

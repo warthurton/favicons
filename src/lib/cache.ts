@@ -1,10 +1,5 @@
-import { put, head, list } from "@vercel/blob";
+import { put, list } from "@vercel/blob";
 import axios from "axios";
-
-export interface CacheEntry {
-  url: string;
-  blobUrl: string;
-}
 
 // Check if an icon is cached in Vercel Blob
 export async function getCachedIcon(domain: string, size?: number): Promise<string | null> {
@@ -21,7 +16,8 @@ export async function getCachedIcon(domain: string, size?: number): Promise<stri
       return blobs[0].url;
     }
     return null;
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error("Error checking cached icon:", error);
     return null;
   }
 }
@@ -43,7 +39,7 @@ export async function cacheIcon(
       addRandomSuffix: false,
     });
     return blob.url;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error caching icon to Vercel Blob:", error);
     throw error;
   }
