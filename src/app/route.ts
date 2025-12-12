@@ -26,7 +26,7 @@ export const GET = async (request: NextRequest) => {
     }
   }
 
-  // Check if we have a cached version in Vercel Blob
+  // Check if we have a cached version in Vercel Blob (for both original and resized)
   try {
     const cachedBlobUrl = await getCachedIcon(domain, size);
     if (cachedBlobUrl) {
@@ -44,28 +44,30 @@ export const GET = async (request: NextRequest) => {
     if (faviconUrls && faviconUrls.length > 0) {
       const faviconUrl = faviconUrls[0];
 
-      // If size is requested, fetch, resize, and cache
-      if (size) {
-        try {
-          const iconBuffer = await fetchIconBuffer(faviconUrl);
+      try {
+        const iconBuffer = await fetchIconBuffer(faviconUrl);
+
+        if (size) {
+          // Resize and cache
           const resizedBuffer = await resizeImage(iconBuffer, size);
           const blobUrl = await cacheIcon(domain, faviconUrl, resizedBuffer, size);
           return NextResponse.redirect(blobUrl, {
             status: 302,
           });
-        } catch (error) {
-          console.error("Error processing cached icon:", error);
-          // Fall back to original URL
-          return NextResponse.redirect(faviconUrl, {
+        } else {
+          // Cache original and return
+          const blobUrl = await cacheIcon(domain, faviconUrl, iconBuffer);
+          return NextResponse.redirect(blobUrl, {
             status: 302,
           });
         }
+      } catch (error) {
+        console.error("Error processing cached icon:", error);
+        // Fall back to original URL
+        return NextResponse.redirect(faviconUrl, {
+          status: 302,
+        });
       }
-
-      // No resize needed, redirect to original
-      return NextResponse.redirect(faviconUrl, {
-        status: 302,
-      });
     }
   }
 
