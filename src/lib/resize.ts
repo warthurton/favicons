@@ -12,7 +12,7 @@ export async function resizeImage(
       })
       .png()
       .toBuffer();
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error resizing image:", error);
     throw error;
   }
