@@ -230,6 +230,13 @@ Non-historical documentation goes in:
 - `README.md` - Project overview and quick start
 - `CLAUDE.md` - This file (AI agent instructions)
 
+### Syncing AI Instructions
+
+This file and [.github/copilot-instructions.md](.github/copilot-instructions.md) should remain synchronized to ensure consistent code generation across different AI coding assistants. When updating architectural patterns, workflows, or conventions:
+- Update **both files** with the same information
+- Keep the core patterns identical (branching workflow, commit conventions, cache key formats, error handling)
+- File-specific details can differ (CLAUDE.md may have Claude-specific context), but foundational guidance must match
+
 ## Versioning
 
 This project uses **automated semantic versioning** via GitHub Actions. Version bumps happen automatically when commits are pushed to `main` based on [Conventional Commits](https://www.conventionalcommits.org/) format.
