@@ -2,6 +2,8 @@
 
 An open-source and free favicon provider with caching and resizing support.
 
+> Originally created by [yourselfhosted](https://github.com/yourselfhosted/favicons). This fork adds persistent caching, image resizing, size presets, and path-based routing.
+
 ## Features
 
 - 🎯 Fetch favicons from any domain
@@ -48,7 +50,7 @@ Or use exact pixel values (1-512):
 
 Deploy your own instance to Vercel with persistent caching:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourselfhosted%2Ffavicons&project-name=favicons)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwarthurton%2Ffavicons&project-name=favicons)
 
 ### Setup Requirements
 
