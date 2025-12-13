@@ -12,14 +12,14 @@ const Page = () => {
           <div className="space-y-4">
             <div>
               <h3 className="text-xl font-medium mb-2">Get Original Favicon</h3>
-              <code className="block bg-gray-100 p-3 rounded text-sm">
+              <code className="block bg-gray-800 text-gray-100 p-3 rounded text-sm">
                 {typeof window !== 'undefined' ? window.location.origin : 'https://your-domain.com'}/github.com
               </code>
             </div>
 
             <div>
               <h3 className="text-xl font-medium mb-2">Get Resized Favicon</h3>
-              <code className="block bg-gray-100 p-3 rounded text-sm">
+              <code className="block bg-gray-800 text-gray-100 p-3 rounded text-sm">
                 {typeof window !== 'undefined' ? window.location.origin : 'https://your-domain.com'}/github.com?size=medium
               </code>
             </div>
