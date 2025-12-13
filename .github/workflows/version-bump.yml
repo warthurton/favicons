@@ -39,7 +39,8 @@ jobs:
         run: |
           COMMIT_MSG="${{ github.event.head_commit.message }}"
 
-          if echo "$COMMIT_MSG" | grep -qiE "^(BREAKING CHANGE:|feat!:|fix!:)"; then
+          # Case-insensitive matching for feat, fix, and breaking changes
+          if echo "$COMMIT_MSG" | grep -qiE "^(breaking change:|feat!:|fix!:)"; then
             echo "bump=major" >> $GITHUB_OUTPUT
             echo "Version bump: MAJOR (breaking change detected)"
           elif echo "$COMMIT_MSG" | grep -qiE "^feat(\(.+\))?:"; then
